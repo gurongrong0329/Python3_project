@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import json
 
@@ -38,8 +39,8 @@ class predictor(object):
             if result_data['status'] == 1000:
                 print('==========START==========')
                 w.write('==========START==========\n')
-                print("文本内容为: " + line)
-                w.write("文本内容为: " + line + '\n')
+                print("文本内容为: " + text)
+                w.write("文本内容为: " + text + '\n')
 
                 if result_data['data'] is not None and result_data['data']['result'] is not None:
                     data =  result_data['data']
@@ -54,20 +55,22 @@ class predictor(object):
 
                     else:
                         print('匹配失败')
-                        w.write('匹配失败\n')
-
-                    print( '==========END============\n')
-                    w.write('==========END============\n')
+                        w.write('匹配失败！！！\n'+'错误的节点: ')
+                        w.write(data['result'][0]['target'][0]+'\n')
+                        w.write("正确的节点: " + cat + '\n')
+                    print('==========END============\n')
+                    w.write('==========END============\n\n')
 
                 else:
                     print("未匹配")
                     w.write('未匹配\n')
+                    w.write("正确的节点: " + cat + '\n')
                     print('==========END============\n')
-                    w.write('==========END============\n')
+                    w.write('==========END============\n\n')
 
             else:
-                    print("请求失败", result_data)
-                    w.write("请求失败" + json.dumps(result_data, ensure_ascii=False).encode('utf-8') + "\n")
+                    print("接口请求失败", result_data)
+                    w.write("接口请求失败" + json.dumps(result_data, ensure_ascii=False).encode('utf-8') + "\n")
         print('end------------------------------->')
         w.write('end------------------------------->\n')
         w.close()
