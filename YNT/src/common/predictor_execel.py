@@ -38,8 +38,7 @@ class predictor(object):
                 sheet_cjk=book.sheet_by_name(i)
                 #列数
                 nclos=sheet_cjk.ncols
-                #行数
-                nrows=sheet_cjk.nrows
+
                 for j in range(nclos):
                     #获取每列首行
                     true_code = sheet_cjk.cell_value(0, j)
