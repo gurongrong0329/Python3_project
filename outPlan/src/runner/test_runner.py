@@ -5,7 +5,6 @@
 import HTMLTestRunner
 import os
 import unittest
-from outPlan.src.testCases.logintest import TestLogin
 
 class Runner(unittest.TestCase):
     global runner
@@ -14,12 +13,19 @@ class Runner(unittest.TestCase):
     def report(self):
         aList = os.path.dirname(os.path.abspath('../..'))
         report_path = aList + '\\' + 'outPlan' + '\\' + 'report' + '\\'
+        case_path=aList + '\\' + 'outPlan' + '\\' + 'src' + '\\'+'testCases'+ '\\'
 
         with open(report_path + 'report.html', 'wb') as fp:
             global runner
-            runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='api测试报告', description='测试情况')
+            runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='外呼计划api测试报告', description='测试情况')
+
             suiteTest = unittest.TestSuite()
-            suiteTest.addTest(TestLogin('test_login'))
+            all_cases=unittest.defaultTestLoader.discover(case_path,'test_*.py')
+
+            for case in all_cases:
+
+                suiteTest.addTest(case)
+
             runner.run(suiteTest)
 
 if __name__ == '__main__':

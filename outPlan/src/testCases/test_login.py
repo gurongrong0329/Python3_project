@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 作者: admin
 # 时间: 2018/9/18 11:25
-# 文件: logintest.py
+# 文件: test_login.py
 from outPlan.src.model.login import Login
 import unittest
 import os
@@ -27,7 +27,7 @@ class TestLogin(unittest.TestCase):
          res = lg.login(data.getvalue('account'),data.getvalue('password'))
 
          try:
-            self.assertEqual(res['data']['username'], 'tongcheng@ynt.ai')
+            self.assertEqual(res['data']['username'],data.getvalue('account'))
             self.assertEqual(res['data']['accountType'], 1)
 
          except Exception as e:
