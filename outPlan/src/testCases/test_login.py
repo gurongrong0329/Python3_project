@@ -2,7 +2,7 @@
 # 作者: admin
 # 时间: 2018/9/18 11:25
 # 文件: test_login.py
-from outPlan.src.model.login import Login
+from outPlan.src.modules.login import Login
 import unittest
 import os
 from outPlan.src.common.get_value import GetValue

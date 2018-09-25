@@ -5,8 +5,8 @@
 import unittest
 from outPlan.src.common.get_value import GetValue
 import os
-from outPlan.src.model.login import Login
-from outPlan.src.model.queryscene import QueryScene
+from outPlan.src.modules.login import Login
+from outPlan.src.modules.queryscene import QueryScene
 
 
 class TestQueryScene(unittest.TestCase):
