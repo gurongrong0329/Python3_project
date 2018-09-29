@@ -4,24 +4,22 @@
 # 文件: test_queryscene.py
 import unittest
 from outPlan.src.common.get_value import GetValue
-import os
 from outPlan.src.modules.login import Login
 from outPlan.src.modules.queryscene import QueryScene
-
+from outPlan.src.common.get_path import GetPath
 
 class TestQueryScene(unittest.TestCase):
-    global lg, data,qs
+    global lg,data,qs,path
     lg = None
     data = None
     qs=None
+    path=None
 
     def setUp(self):
-        global lg, data
+        global lg,data,path
 
-        aList = os.path.dirname(os.path.abspath('../..'))
-        data_path = aList + '\\' + 'outPlan' + '\\' + 'data' + '\\parameter.txt'
-
-        data = GetValue(data_path)
+        path = GetPath('data\\parameter.txt')
+        data = GetValue(path.get_filePath())
 
         lg = Login(data.getvalue('url'))
 

@@ -4,21 +4,20 @@
 # 文件: test_login.py
 from outPlan.src.modules.login import Login
 import unittest
-import os
 from outPlan.src.common.get_value import GetValue
+from outPlan.src.common.get_path import GetPath
 
 class TestLogin(unittest.TestCase):
-     global lg,data
+     global lg,data,path
      lg=None
      data=None
+     path=None
 
      def setUp(self):
-         global lg,data
+         global lg,data,path
 
-         aList = os.path.dirname(os.path.abspath('../..'))
-         data_path = aList + '\\' + 'outPlan' + '\\' + 'data' + '\\parameter.txt'
-
-         data=GetValue(data_path)
+         path=GetPath('data\\parameter.txt')
+         data=GetValue(path.get_filePath())
 
          lg = Login(data.getvalue('url'))
 

@@ -2,12 +2,11 @@
 # 作者: admin
 # 时间: 2018/9/19 11:44
 # 文件: get_value.py
-import os
 
 class GetValue():
 
      def __init__(self,datapath):
-         self.datapath=datapath
+         self.datapath= datapath
 
      def getvalue(self,data_key):
          with open(self.datapath,'r', encoding="utf-8") as fb:
@@ -21,5 +20,3 @@ class GetValue():
                         return e
          fb.close()
 
-
-         
