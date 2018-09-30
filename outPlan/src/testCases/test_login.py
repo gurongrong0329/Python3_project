@@ -5,19 +5,15 @@
 from outPlan.src.modules.login import Login
 import unittest
 from outPlan.src.common.get_value import GetValue
-from outPlan.src.common.get_path import GetPath
 
 class TestLogin(unittest.TestCase):
-     global lg,data,path
      lg=None
      data=None
-     path=None
 
      def setUp(self):
          global lg,data,path
 
-         path=GetPath('data\\parameter.txt')
-         data=GetValue(path.get_filePath())
+         data = GetValue()
 
          lg = Login(data.getvalue('url'))
 

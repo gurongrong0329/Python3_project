@@ -6,20 +6,16 @@ import unittest
 from outPlan.src.common.get_value import GetValue
 from outPlan.src.modules.login import Login
 from outPlan.src.modules.queryscene import QueryScene
-from outPlan.src.common.get_path import GetPath
 
 class TestQueryScene(unittest.TestCase):
-    global lg,data,qs,path
     lg = None
     data = None
     qs=None
-    path=None
 
     def setUp(self):
-        global lg,data,path
+        global lg,data
 
-        path = GetPath('data\\parameter.txt')
-        data = GetValue(path.get_filePath())
+        data = GetValue()
 
         lg = Login(data.getvalue('url'))
 

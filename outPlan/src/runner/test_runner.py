@@ -5,23 +5,26 @@
 import HTMLTestRunner
 import unittest
 from outPlan.src.common.get_path import GetPath
+from outPlan.src.common.get_value import GetValue
 
 class Runner(unittest.TestCase):
-    global runner,path
     runner=None
     path=None
+    data=None
 
     def report(self):
-        global path
+        global path,data
 
-        path=GetPath('report\\')
+        data=GetValue()
+        path=GetPath(data.getvalue('report_path'))
+
         with open(path.get_filePath()+ 'report.html', 'wb') as fp:
             global runner
-            runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='外呼计划api测试报告', description='测试情况')
+            runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title=data.getvalue('title'), description=data.getvalue('description'))
 
             suiteTest = unittest.TestSuite()
 
-            path=GetPath('src\\testCases\\')
+            path=GetPath(data.getvalue('cases_path'))
 
             all_cases=unittest.defaultTestLoader.discover(path.get_filePath(),'test_*.py')
 
