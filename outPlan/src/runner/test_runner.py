@@ -4,6 +4,7 @@
 # 文件: test_runner.py
 import HTMLTestRunner
 import unittest
+import datetime
 from outPlan.src.common.get_path import GetPath
 from outPlan.src.common.get_value import GetValue
 
@@ -16,11 +17,12 @@ class Runner(unittest.TestCase):
         global path,data
 
         data=GetValue()
-        path=GetPath(data.getvalue('report_path'))
+        now_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        path=GetPath(data.getvalue('report_path')+'%s.html'%now_time)
 
-        with open(path.get_filePath()+ 'report.html', 'wb') as fp:
+        with open(path.get_filePath(),'wb') as fp:
             global runner
-            runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title=data.getvalue('title'), description=data.getvalue('description'))
+            runner = HTMLTestRunner.HTMLTestRunner(stream=fp,title=data.getvalue('title'),description=data.getvalue('description'))
 
             suiteTest = unittest.TestSuite()
 
