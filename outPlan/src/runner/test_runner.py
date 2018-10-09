@@ -2,11 +2,11 @@
 # 作者: admin
 # 时间: 2018/9/21 9:56
 # 文件: test_runner.py
+import sys
+sys.path.append('..')
 import HTMLTestRunner
 import unittest
 import datetime
-import sys
-sys.path.append('..')
 from common.get_path import GetPath
 from common.get_value import GetValue
 
