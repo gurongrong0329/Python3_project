@@ -9,6 +9,7 @@ import unittest
 import datetime
 from common.get_path import GetPath
 from common.get_value import GetValue
+from common.smtp import Smtp
 
 class Runner(unittest.TestCase):
     runner=None
@@ -21,8 +22,9 @@ class Runner(unittest.TestCase):
         data=GetValue()
         now_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         path=GetPath(data.getvalue('report_path')+'%s.html'%now_time)
+        report_path=path.get_filePath()
 
-        with open(path.get_filePath(),'wb') as fp:
+        with open(report_path,'wb') as fp:
             global runner
             runner = HTMLTestRunner.HTMLTestRunner(stream=fp,title=data.getvalue('title'),description=data.getvalue('description'))
 
@@ -37,6 +39,9 @@ class Runner(unittest.TestCase):
                 suiteTest.addTest(case)
 
             runner.run(suiteTest)
+
+        email=Smtp()
+        email.sendEmail(report_path)
 
 if __name__ == '__main__':
 
