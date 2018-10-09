@@ -2,9 +2,11 @@
 # 作者: admin
 # 时间: 2018/9/18 11:25
 # 文件: test_login.py
-from outPlan.src.modules.login import Login
+import sys
+sys.path.append('..')
+from modules.login import Login
 import unittest
-from outPlan.src.common.get_value import GetValue
+from common.get_value import GetValue
 
 class TestLogin(unittest.TestCase):
      lg=None

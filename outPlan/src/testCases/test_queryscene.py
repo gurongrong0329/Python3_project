@@ -2,10 +2,12 @@
 # 作者: admin
 # 时间: 2018/9/21 11:36
 # 文件: test_queryscene.py
+import sys
+sys.path.append('..')
 import unittest
-from outPlan.src.common.get_value import GetValue
-from outPlan.src.modules.login import Login
-from outPlan.src.modules.queryscene import QueryScene
+from common.get_value import GetValue
+from modules.login import Login
+from modules.queryscene import QueryScene
 
 class TestQueryScene(unittest.TestCase):
     lg = None

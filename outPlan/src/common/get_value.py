@@ -2,7 +2,9 @@
 # 作者: admin
 # 时间: 2018/9/19 11:44
 # 文件: get_value.py
-from outPlan.src.common.get_path import GetPath
+import sys
+sys.path.append('..')
+from common.get_path import GetPath
 
 class GetValue():
 

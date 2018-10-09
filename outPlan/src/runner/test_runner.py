@@ -5,8 +5,10 @@
 import HTMLTestRunner
 import unittest
 import datetime
-from outPlan.src.common.get_path import GetPath
-from outPlan.src.common.get_value import GetValue
+import sys
+sys.path.append('..')
+from common.get_path import GetPath
+from common.get_value import GetValue
 
 class Runner(unittest.TestCase):
     runner=None
