@@ -10,5 +10,5 @@ class GetPath():
 
 
     def get_filePath(self):
-        filePath = os.path.dirname(os.path.abspath('../..')) + '\\' + 'outPlan' + '\\' + self.path
+        filePath = os.path.dirname(os.path.abspath('../..')) + '/' + 'outPlan' + '/' + self.path
         return filePath
