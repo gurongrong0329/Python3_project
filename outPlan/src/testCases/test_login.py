@@ -17,7 +17,7 @@ class TestLogin(unittest.TestCase):
 
          data = GetValue()
 
-         lg = Login(data.getvalue('url'))
+         lg = Login(data.getvalue('url_qa'))
 
      def test_login(self):
          global lg,data
