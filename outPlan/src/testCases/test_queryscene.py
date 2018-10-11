@@ -36,7 +36,7 @@ class TestQueryScene(unittest.TestCase):
 
         qs=QueryScene(data.getvalue('queryscene_url_qa'))
         res=qs.get_queryscene(data.getvalue('userid'))
-
+        print(res)
         self.assertEqual(res['success'],True)
 
 
