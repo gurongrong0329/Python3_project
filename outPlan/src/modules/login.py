@@ -6,15 +6,21 @@ import requests
 import json
 
 class Login():
+    global login_url
+    login_url='/login/doLogin.do'
 
-    def __init__(self,url):
-        self.url=url
+    def __init__(self,address):
+        self.address=address
 
     def login(self,account,password):
+        global login_url
         headers = {'Content-Type': 'application/json'}
         data={'username':account,'password':password}
+
         try:
-            res=requests.post(self.url,headers=headers,data=json.dumps(data))
+            res=requests.post(self.address+login_url,headers=headers,data=json.dumps(data))
             return  json.loads(res.text)
         except Exception as e:
             print(e)
+
+

@@ -6,15 +6,18 @@ import requests
 import json
 
 class QueryScene():
+    global get_queryscene_url
+    get_queryscene_url='/scene/queryScene.do'
 
-    def __init__(self,url):
-        self.url=url
+    def __init__(self,address):
+        self.address=address
 
     def get_queryscene(self,userId):
+        global  get_queryscene_url
         headers = {'Content-Type': 'application/json'}
         data={'userid':userId}
         try:
-            res=requests.post(self.url,headers=headers,data=json.dumps(data))
+            res=requests.post(url=self.address+get_queryscene_url,headers=headers,data=json.dumps(data))
             return  json.loads(res.text)
         except Exception as e:
             print(e)

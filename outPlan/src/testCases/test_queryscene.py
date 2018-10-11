@@ -19,9 +19,9 @@ class TestQueryScene(unittest.TestCase):
 
         data = GetValue()
 
-        lg = Login(data.getvalue('url_qa'))
+        lg = Login(data.getvalue('dev_address'))
 
-        res = lg.login(data.getvalue('account'), data.getvalue('password'))
+        res = lg.login(data.getvalue('account'), data.getvalue('dev_password'))
 
         try:
             self.assertEqual(res['data']['username'], data.getvalue('account'))
@@ -34,7 +34,7 @@ class TestQueryScene(unittest.TestCase):
     def test_queryScene(self):
         global qs,data
 
-        qs=QueryScene(data.getvalue('queryscene_url_qa'))
+        qs=QueryScene(data.getvalue('dev_address'))
         res=qs.get_queryscene(data.getvalue('userid'))
 
         self.assertEqual(res['success'],True)
