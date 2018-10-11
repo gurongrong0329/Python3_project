@@ -6,7 +6,7 @@ import json
 import requests
 
 class CustomerManage():
-
+    global getPhoneNumList_url,getCustomerGroupById_url,addCustomerGroup_url,deleteGroupAndCustomerPhone_url,updateCustomerGroup_url,movePhoneNumber_url
     getPhoneNumList_url='/customer/getPhoneNumList.do'
     getCustomerGroupById_url='/customer/getCustomerGroupById.do'
     addCustomerGroup_url='/customer/addCustomerGroup.do'
