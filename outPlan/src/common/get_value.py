@@ -21,4 +21,3 @@ class GetValue():
                         return lines[1].strip()
                  except Exception as e:
                         return e
-         fb.close()
