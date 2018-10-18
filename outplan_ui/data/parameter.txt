@@ -1,0 +1,11 @@
+address =http://uat-outbound.ynt.ai:7001/outplan/index.html#/login
+account =gurr@ynt.ai
+password =123456
+report_path=report\\
+cases_path=src\\testCases\\
+title=外呼计划UI层测试报告
+description=测试情况
+driver=driver\\chromedriver.exe
+e_account=//input[@placeholder="注册邮箱地址"]
+e_password=//input[@type="password"]
+e_login_button=//input[@value="立即登录"]
