@@ -64,3 +64,4 @@ class CustomerManage():
         data = {'id': id, 'groupId': groupId}
         res = requests.post(self.address+movePhoneNumber_url, headers=headers, data=json.dumps(data))
         return json.loads(res.text)
+
