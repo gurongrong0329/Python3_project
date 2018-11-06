@@ -21,7 +21,7 @@ class TestQueryScene(unittest.TestCase):
 
         lg = Login(data.getvalue('uat_address'))
 
-        res = lg.login(data.getvalue('account'), data.getvalue('uat_address'))
+        res = lg.login(data.getvalue('account'), data.getvalue('uat_password'))
 
         try:
             self.assertEqual(res['data']['username'], data.getvalue('account'))
