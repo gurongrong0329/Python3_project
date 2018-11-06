@@ -17,11 +17,11 @@ class TestLogin(unittest.TestCase):
 
          data = GetValue()
 
-         lg = Login(data.getvalue('dev_address'))
+         lg = Login(data.getvalue('uat_address'))
 
      def test_login(self):
          global lg,data
-         res = lg.login(data.getvalue('account'),data.getvalue('dev_password'))
+         res = lg.login(data.getvalue('account'),data.getvalue('uat_address'))
 
          try:
             self.assertEqual(res['data']['username'],data.getvalue('account'))
