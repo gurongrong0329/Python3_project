@@ -23,12 +23,9 @@ class TestLogin(unittest.TestCase):
          global lg,data
          res = lg.login(data.getvalue('account'),data.getvalue('uat_password'))
 
-         try:
-            self.assertEqual(res['data']['username'],data.getvalue('account'))
-            self.assertEqual(res['data']['accountType'], 1)
+         self.assertEqual(res['data']['username'],data.getvalue('account'))
+         self.assertEqual(res['data']['accountType'], 1)
 
-         except Exception as e:
-            print(e)
 
      def tearDown(self):
          pass
