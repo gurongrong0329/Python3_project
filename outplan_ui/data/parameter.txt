@@ -9,3 +9,12 @@ driver=driver\\chromedriver.exe
 e_account=//input[@placeholder="注册邮箱地址"]
 e_password=//input[@type="password"]
 e_login_button=//input[@value="立即登录"]
+e_updateGroup=//div[@class="caTitle"]/i
+e_phoneNumManage=//span[text()="客户管理"]
+e_addGroup=//span[text()="添加分组"]
+e_inputName=//input[@placeholder="输入名称"]
+e_commit=//i[@title="确定"]
+e_deleteGroup=//span[text()="%var%"]/parent::li
+e_deleteCommit=//span[text()="%var%"]/parent::li/div/i[@title="删除"]
+e_ok=//div[@class="ivu-modal-confirm"]/div[3]/button[2]/span
+groupName=自动化测试
