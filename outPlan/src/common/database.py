@@ -33,22 +33,22 @@ class DataBase:
         return table
 
     # 查找集合中所有数据
-    def find(self,table,map):
+    def mongdb_find(self,table,map):
 
         return table.find(map)
 
     # 删除数据
-    def remove(self,table,map):
+    def mongdb_remove(self,table,map):
 
         return table.remove(map)
 
     #更新数据
-    def update(self,table,map):
+    def mongdb_update(self,table,map):
 
         return  table.update(map)
 
     #插入数据
-    def insert(self,table,map):
+    def mongdb_insert(self,table,map):
 
         return table.insert(map)
 
