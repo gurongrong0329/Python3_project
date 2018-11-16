@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # 作者: 顾名思义
 # 时间: 2018/11/15 14:13
-# 文件: database.py
+# 文件: mongodb.py
 from pymongo import MongoClient
 
-class DataBase:
+class Mongodb:
     '''
-    uat = DataBase('outbound_uat','phone_number')
+    uat = Mongodb('outbound_uat','phone_number')
     table = uat.connect_mongodb()
     res=uat.find(table,{'userId':21,'groupName':'测试组'})
 
@@ -33,22 +33,22 @@ class DataBase:
         return table
 
     # 查找集合中所有数据
-    def mongdb_find(self,table,map):
+    def mongodb_find(self,table,map):
 
         return table.find(map)
 
     # 删除数据
-    def mongdb_remove(self,table,map):
+    def mongodb_remove(self,table,map):
 
         return table.remove(map)
 
     #更新数据
-    def mongdb_update(self,table,map):
+    def mongodb_update(self,table,map):
 
         return  table.update(map)
 
     #插入数据
-    def mongdb_insert(self,table,map):
+    def mongodb_insert(self,table,map):
 
         return table.insert(map)
 
