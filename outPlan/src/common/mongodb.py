@@ -20,8 +20,8 @@ class Mongodb:
         self.db_name=db_name
         self.table_name=table_name
 
+    # 建立MongoDB数据库连接
     def connect_mongodb(self):
-        # 建立MongoDB数据库连接
         client = MongoClient(self.address,self.port)
 
         # 连接所需数据库,db_name为数据库名
