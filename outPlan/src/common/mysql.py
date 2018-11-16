@@ -50,6 +50,9 @@ class Mysql:
             # 如果发生错误则回滚
             con[1].rollback()
 
+
+
+
     # SQL删除
     def mysql_delete(self,con,sql):
          try:
