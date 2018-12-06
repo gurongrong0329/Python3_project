@@ -23,7 +23,7 @@ class TestLogin(unittest.TestCase):
          global lg,data
          res = lg.login(data.getvalue('account'),data.getvalue('uat_password'))
 
-         self.assertEqual(res['data']['username'],data.getvalue('account'))
+         self.assertEqual(res['data']['userName'],data.getvalue('account'))
          self.assertEqual(res['data']['accountType'], 1)
 
 

@@ -9,11 +9,11 @@ class Login():
 
     def __init__(self,address):
         self.address=address
-        self.login_url = '/login/doLogin.do'
+        self.login_url = '/newLogin/doLogin'
 
     def login(self,account,password):
         headers = {'Content-Type': 'application/json'}
-        data={'username':account,'password':password}
+        data={'userName':account,'password':password}
 
         try:
             res=requests.post(self.address+self.login_url,headers=headers,data=json.dumps(data))
