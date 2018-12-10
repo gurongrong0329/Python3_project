@@ -13,32 +13,29 @@ class TestQueryScene(unittest.TestCase):
     lg = None
     data = None
     qs=None
-
+    token=None
     def setUp(self):
-        global lg,data
+        global lg,data,token
 
         data = GetValue()
 
         lg = Login(data.getvalue('uat_address'))
 
         res = lg.login(data.getvalue('account'), data.getvalue('uat_password'))
-
-        try:
-            self.assertEqual(res['data']['username'], data.getvalue('account'))
-            self.assertEqual(res['data']['accountType'], 1)
-
-        except Exception as e:
-            print(e)
-
+        token=res['data']['token']
+        self.assertEqual(res['data']['userName'], data.getvalue('account'))
+        self.assertEqual(res['data']['accountType'], 1)
 
     def test_queryScene(self):
         global qs,data
 
         qs=QueryScene(data.getvalue('uat_address'))
-        res=qs.get_queryscene(data.getvalue('userid'))
+        res=qs.get_queryscene(data.getvalue('userid'),token)
 
         self.assertEqual(res['success'],True)
 
 
     def tearDown(self):
-        pass
+        logout=lg.logout(token)
+        self.assertEqual(logout['status'],1000)
+        self.assertEqual(logout['msg'],'操作成功')
