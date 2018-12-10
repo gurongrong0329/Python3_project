@@ -11,8 +11,8 @@ class QueryScene():
         self.address=address
         self.get_queryscene_url = '/scene/queryScene.do'
 
-    def get_queryscene(self,userId):
-        headers = {'Content-Type': 'application/json'}
+    def get_queryscene(self,userId,token):
+        headers = {'Content-Type': 'application/json','token':token}
         data={'userid':userId}
         try:
             res=requests.post(url=self.address+self.get_queryscene_url,headers=headers,data=json.dumps(data))

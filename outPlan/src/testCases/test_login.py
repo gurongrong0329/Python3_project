@@ -11,7 +11,7 @@ from common.get_value import GetValue
 class TestLogin(unittest.TestCase):
      lg=None
      data=None
-
+     token=None
      def setUp(self):
          global lg,data,path
 
@@ -20,15 +20,17 @@ class TestLogin(unittest.TestCase):
          lg = Login(data.getvalue('uat_address'))
 
      def test_login(self):
-         global lg,data
+         global lg,data,token
          res = lg.login(data.getvalue('account'),data.getvalue('uat_password'))
-
+         token=res['data']['token']
          self.assertEqual(res['data']['userName'],data.getvalue('account'))
          self.assertEqual(res['data']['accountType'], 1)
 
 
      def tearDown(self):
-         pass
+         logout = lg.logout(token)
+         self.assertEqual(logout['status'], 1000)
+         self.assertEqual(logout['msg'], '操作成功')
 
 
 

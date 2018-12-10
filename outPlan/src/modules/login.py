@@ -10,6 +10,7 @@ class Login():
     def __init__(self,address):
         self.address=address
         self.login_url = '/newLogin/doLogin'
+        self.logout_url = '/newLogin/logout'
 
     def login(self,account,password):
         headers = {'Content-Type': 'application/json'}
@@ -21,4 +22,12 @@ class Login():
         except Exception as e:
             print(e)
 
+    def logout(self,token):
+        headers = {'Content-Type':'application/json','token':token}
+
+        try:
+            res=requests.get(self.address+self.logout_url,headers=headers)
+            return  json.loads(res.text)
+        except Exception as e:
+            print(e)
 
