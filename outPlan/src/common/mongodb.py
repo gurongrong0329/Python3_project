@@ -8,7 +8,7 @@ class Mongodb:
     '''
     uat = Mongodb('outbound_uat','phone_number')
     table = uat.connect_mongodb()
-    res=uat.find(table,{'userId':21,'groupName':'测试组'})
+    res=uat.mongodb_find(table,{'userId':21,'groupName':'测试组'})
 
     for item in res:
         print(item)
