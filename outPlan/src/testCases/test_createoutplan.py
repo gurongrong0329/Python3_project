@@ -15,11 +15,12 @@ import time
 class TestCreateOutPlan(unittest.TestCase):
     lg = None
     data = None
-    token=None
-    groupId=None
-    csm=None
-    planId=None
-    auto_test=None
+    token= None
+    groupId= None
+    csm= None
+    planId = None
+    auto_test = None
+
     def setUp(self):
         global lg,data,token,groupId,csm
 
