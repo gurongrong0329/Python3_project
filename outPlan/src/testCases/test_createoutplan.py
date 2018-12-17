@@ -11,6 +11,8 @@ from modules.outplan import OutPlan
 from modules.customer_manage import CustomerManage
 from common.mongodb import Mongodb
 import time
+from modules.sip_manage import sipManage
+from common.mysql import Mysql
 
 class TestCreateOutPlan(unittest.TestCase):
     lg = None
@@ -20,9 +22,12 @@ class TestCreateOutPlan(unittest.TestCase):
     csm= None
     planId = None
     auto_test = None
+    sip = None
+    sip_id = None
+    group_number = None
 
     def setUp(self):
-        global lg,data,token,groupId,csm
+        global lg,data,token,groupId,csm,planId,auto_test,sip,sip_id,group_number
 
         data = GetValue()
         #登录
@@ -34,7 +39,7 @@ class TestCreateOutPlan(unittest.TestCase):
 
         #创建客户组手动上传号码
         csm=CustomerManage(data.getvalue('product_address'))
-        res2=csm.addPhoneNumber(token,data.getvalue('userid'),['15900000000'],1,'autoTest')
+        res2=csm.addPhoneNumber(token,data.getvalue('userid'),['17200001999'],1,'autoTest')
         self.assertEqual(res2['status'], 1000)
         self.assertEqual(res2['msg'], '操作成功')
 
@@ -45,10 +50,24 @@ class TestCreateOutPlan(unittest.TestCase):
         for item in res3:
             groupId=item['groupId']
 
+        # 添加SIP
+        sip = sipManage(data.getvalue('product_address'))
+        res = sip.add_sip(token)
+        self.assertEqual(res['status'], 1000)
+        self.assertEqual(res['msg'], '操作成功')
+
+        # 查询mysql获取线路id、group_number
+        product_m = Mysql('172.20.10.14', 3306, 'root', 'kalamodo', 'outbound_product')
+        con = product_m.connect_mysql()
+        res = product_m.mysql_select(con[0], 'SELECT id,group_number FROM ko_sipmanager where privately=21')
+        for row in res:
+            sip_id = row[0]
+            group_number = row[1]
+
     def test_createplan(self):
         global data,planId,auto_test
         auto_test=OutPlan(data.getvalue('product_address'))
-        res=auto_test.creat_outplan(token,data.getvalue('userid'),'3706','autoTest','尚德销售纵线白名单',groupId)
+        res=auto_test.creat_outplan(token,data.getvalue('userid'),'3706','autoTest','尚德销售纵线白名单',sip_id,groupId)
         planId=res['data']['planId']
         self.assertEqual(res['status'],1000)
         self.assertEqual(res['msg'],'操作成功')
@@ -75,6 +94,14 @@ class TestCreateOutPlan(unittest.TestCase):
                     flag=False
             time.sleep(1)
 
+        #修改SIP禁用
+        res5 = sip.update_sip(token,group_number,sip_id)
+        self.assertEqual(res5['status'], 1000)
+        self.assertEqual(res5['msg'], '操作成功')
+        #删除sip
+        res6 = sip.delete_sip(token,sip_id)
+        self.assertEqual(res6['status'], 1000)
+        self.assertEqual(res6['msg'], '操作成功')
         #注销用户
         logout=lg.logout(token)
         self.assertEqual(logout['status'],1000)
