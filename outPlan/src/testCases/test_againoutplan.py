@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 作者: 顾名思义
-# 时间: 2018/12/10 15:36
-# 文件: test_createoutplan.py
+# 时间: 2018/12/14 11:59
+# 文件: test_againoutplan.py
 import sys
 sys.path.append('..')
 import unittest
@@ -22,12 +22,14 @@ class TestCreateOutPlan(unittest.TestCase):
     csm= None
     planId = None
     auto_test = None
-    sip = None
-    sip_id = None
-    group_number = None
+    phoneId=None
+    planId2=None
+    sip=None
+    sip_id=None
+    group_number=None
 
     def setUp(self):
-        global lg,data,token,groupId,csm,planId,auto_test,sip,sip_id,group_number
+        global lg,data,token,groupId,csm,planId,phoneId,auto_test,sip,sip_id,group_number
 
         data = GetValue()
         #登录
@@ -50,33 +52,61 @@ class TestCreateOutPlan(unittest.TestCase):
         for item in res3:
             groupId=item['groupId']
 
-        # 添加SIP
-        sip = sipManage(data.getvalue('product_address'))
-        res = sip.add_sip(token)
+        #添加SIP
+        sip=sipManage(data.getvalue('product_address'))
+        res=sip.add_sip(token)
         self.assertEqual(res['status'], 1000)
-        self.assertEqual(res['msg'], '操作成功')
+        self.assertEqual(res['msg'],'操作成功')
 
-        # 查询mysql获取线路id、group_number
-        product_m = Mysql('172.20.10.14', 3306, 'root', 'kalamodo', 'outbound_product')
+        #查询mysql获取线路id、group_number
+        product_m = Mysql('172.20.10.14',3306,'root','kalamodo','outbound_product')
         con = product_m.connect_mysql()
         res = product_m.mysql_select(con[0], 'SELECT id,group_number FROM ko_sipmanager where privately=21')
         for row in res:
-            sip_id = row[0]
-            group_number = row[1]
+            sip_id=row[0]
+            group_number=row[1]
 
-    def test_createplan(self):
-        global data,planId,auto_test
-        auto_test=OutPlan(data.getvalue('product_address'))
-        res=auto_test.creat_outplan(token,data.getvalue('userid'),'3706','autoTest','尚德销售纵线白名单',sip_id,groupId)
-        planId=res['data']['planId']
-        self.assertEqual(res['status'],1000)
-        self.assertEqual(res['msg'],'操作成功')
+        #创建外呼计划
+        auto_test = OutPlan(data.getvalue('product_address'))
+        res = auto_test.creat_outplan(token, data.getvalue('userid'),'3706','autoTest','尚德销售纵线白名单',sip_id,groupId)
+        planId = res['data']['planId']
+        self.assertEqual(res['status'], 1000)
+        self.assertEqual(res['msg'], '操作成功')
+
+        #获取phoneid
+        res=auto_test.get_CallDetail(token,planId)
+        phoneId=res['data']['list'][0]['id']
+
+
+    def test_createAgainplan(self):
+        global planId2
+        # 查询mongodb外呼计划状态
+        product = Mongodb('outbound_product', 'call_log', '172.20.10.20', 27017)
+        table = product.connect_mongodb()
+
+        flag = True
+        while flag:
+            res2 = product.mongodb_find(table, {'userId': 21, 'planName': 'autoTest', 'planId': planId})
+            for item in res2:
+                if item['status'] == 5:
+                    #二次外呼
+                    res=auto_test.create_AgainOutPlan(token,data.getvalue('userid'),'3706','尚德销售纵线白名单',sip_id,phoneId)
+                    self.assertEqual(res['status'], 1000)
+                    self.assertEqual(res['msg'], '操作成功')
+                    planId2=res['data']['planId']
+                    flag = False
+            time.sleep(1)
+
 
     def tearDown(self):
         #删除客户组与号码
         res=csm.deleteGroupAndCustomerPhone(token,groupId)
         self.assertEqual(res['status'], 1000)
         self.assertEqual(res['msg'], '操作成功')
+        #删除第一个计划
+        res2 = auto_test.delete_outplan(token, planId)
+        self.assertEqual(res2['status'], 1000)
+        self.assertEqual(res2['msg'], '操作成功')
 
         #查询mongodb外呼计划状态
         product = Mongodb('outbound_product', 'call_log', '172.20.10.20', 27017)
@@ -84,22 +114,22 @@ class TestCreateOutPlan(unittest.TestCase):
 
         flag=True
         while flag:
-            res2 = product.mongodb_find(table, {'userId': 21, 'planName': 'autoTest', 'planId': planId})
-            for item in res2:
+            res3 = product.mongodb_find(table, {'userId': 21, 'planName': 'autoTest二次外呼', 'planId': planId2})
+            for item in res3:
                 if item['status']==5:
-                    # 删除外呼计划
-                    res = auto_test.delete_outplan(token, planId)
-                    self.assertEqual(res['status'], 1000)
-                    self.assertEqual(res['msg'], '操作成功')
+                    # 删除外呼计划2
+                    res4 = auto_test.delete_outplan(token, planId2)
+                    self.assertEqual(res4['status'], 1000)
+                    self.assertEqual(res4['msg'], '操作成功')
                     flag=False
             time.sleep(1)
 
         #修改SIP禁用
-        res5 = sip.update_sip(token,group_number,sip_id)
+        res5=sip.update_sip(token,group_number,sip_id)
         self.assertEqual(res5['status'], 1000)
         self.assertEqual(res5['msg'], '操作成功')
         #删除sip
-        res6 = sip.delete_sip(token,sip_id)
+        res6=sip.delete_sip(token,sip_id)
         self.assertEqual(res6['status'], 1000)
         self.assertEqual(res6['msg'], '操作成功')
         #注销用户

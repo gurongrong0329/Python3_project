@@ -10,7 +10,7 @@ class Mysql:
     con=uat.connect_mysql()
     res=uat.mysql_select(con[0],'SELECT * FROM ko_sipmanager where privately=21')
     for row in res:
-        print(res)
+        print(row)
 
     '''
     def __init__(self,host='192.168.88.63',port=3306,user='root',passwd='kalamodo',db='outbound_uat'):
